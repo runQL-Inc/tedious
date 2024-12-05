@@ -4,6 +4,7 @@ import WritableTrackingBuffer from './tracking-buffer/writable-tracking-buffer';
 import { randomBytes } from 'crypto';
 
 const optionBufferSize = 20;
+const traceIdSize = 36;
 
 const TOKEN = {
   VERSION: 0x00,
@@ -187,12 +188,10 @@ class PreloginPayload {
   }
 
   createTraceIdOption() {
-    const buffer = new WritableTrackingBuffer(36);
+    const buffer = new WritableTrackingBuffer(traceIdSize);
     // generate a random series of bytes to use as the TraceID
     // used for debugging purposes
-    for (let i = 0; i < 36; i++) {
-      buffer.writeUInt8(randomBytes(1)[0]);
-    }
+    buffer.writeBuffer(randomBytes(traceIdSize));
     return {
       token: TOKEN.TRACEID,
       data: buffer.data
