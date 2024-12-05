@@ -261,7 +261,7 @@ class PreloginPayload {
   }
 
   extractTraceId(offset: number) {
-    this.traceId = this.data.subarray(offset, 36);
+    this.traceId = this.data.subarray(offset, traceIdSize);
   }
 
   extractFedAuth(offset: number) {
